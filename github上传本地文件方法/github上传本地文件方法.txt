@@ -1,0 +1,93 @@
+1.下载git工具
+2.打开安装好的 Git Bash 输入以下命令：
+$ git config --global user.name "YiyiF"
+
+$ git config --global user.email "yiyifu97@gmail.com"
+Note: name 和 email 为注册github 的用户名及邮箱地址。
+
+3.创建仓库
+点击右上角的小加号new repository，按照指示建立即可
+4.设置SSH key
+直接回车即可保存在默认路径
+$ ssh-keygen -t rsa -C "yiyifu97@gmail.com"
+一直回车即可
+5.为github账号配置SSH key
+点开头像展开小三角，点击Settings，选择SSH and GPG keys，
+接着点击 New SSH key，将之前复制的公钥填至对应Key一栏即可。
+6.上传本地文件至github
+我已创建了一个test文件夹，里面有两个文件夹，分别包含一个简单的.py文件。
+Note: 要上传的文件夹为test_1和test_2，
+需要一次上传的文件夹在一个目录下可以一次上传。
+7.通过Git上传文件
+Step 1：建立本地仓库
+Note: cd 为文件路径；git init会在此文件夹生成一个.Git隐藏文件；
+git add . 会上传所有文件；
+git commit 添加注释。
+
+$ cd d:text
+
+$ git init
+
+$ git add .
+
+$ git commit -m "这里是注释"
+
+Step 2：上传文件至github
+打开仓库，点击Clone or download复制下面的地址，
+然后执行下面的指令：
+
+
+Note:?git remote add origin后为所复制的仓库地址；
+git push -u origin master命令即可上传本地代码。
+
+
+
+$ git remote add origin https://github.com/YiyiF/upload_folders.git
+
+$ git push -u origin master
+
+此处可以看到，有可能会出现error。
+但按以下方法可以解决：
+
+注意到提示有说输入 git pull 即可解决，
+因此首先输入git pull 命令，然后输入git push origin master -f命令。
+显示100%，done即为上传成功，注意到To后的地址就是我们要上传文件的仓库。
+
+
+此时刷新仓库，即可看到上传成功的文件。
+
+8.此时如果git pull报错:There is no tracking information for the current branch
+当删除了本地的.git文件后，需要重新和远程仓库建立连接后才能继续更新和上传代码，一般情况下我们采用的步骤是：
+1.git init
+2.git remote add origin git地址
+3.git pull
+
+有时候在pull这一步会报错，提示
+There is no tracking information for the current branch.
+
+Please specify which branch you want to merge with.
+
+See git-pull(1) for details
+
+git pull <remote> <branch>
+If you wish to set tracking information for this branch you can do so with:
+
+git branch --set-upstream-to=origin/<branch>
+
+是因为本地分支和远程分支没有建立联系 (使用git branch -vv 可以查看本地分支和远程分支的关联关系) .根据命令行提示只需要执行以下命令即可
+
+如果git branch -vv 有输出结果，那么我们可以直接执行：
+
+git branch --set-upstream-to=origin/master master
+
+这样远程仓库和本地仓库链接就建立完成了，可以继续执行git pull操作了。
+
+但是如果执行git branch -vv 没有信息时，执行git pull肯定会出现下面的结果
+
+fatal: branch 'master' does not exist
+主要原因是本地仓没有在master上所以报错了，于是我们需要执行
+
+git checkout master
+git branch --set-upstream-to=origin/master master
+git pull
+
